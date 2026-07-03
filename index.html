@@ -235,6 +235,25 @@
       margin: 0;
     }
 
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #061018;
+      border: 1px solid rgba(6, 16, 24, 0.16);
+      box-shadow: 0 22px 68px rgba(6, 16, 24, 0.10);
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
     .contact-card {
       width: 100%;
       max-width: 620px;
@@ -372,7 +391,7 @@
 
   <main>
     <section class="art" aria-label="RAISE">
-      <img src="assets/raise-poster-horizontal.jpeg?v=21" alt="RAISE film artwork" />
+      <img src="assets/raise-poster-horizontal.jpeg?v=31" alt="RAISE film artwork" />
     </section>
 
     <div class="separator" aria-hidden="true"></div>
@@ -430,21 +449,13 @@
           <h2>Watch the trailer.</h2>
         </div>
 
-        <div class="trailer-copy">
-          <p>
-            The trailer opens on Vimeo.
-          </p>
-
-          <div class="button-row">
-            <a
-              class="button"
-              href="https://vimeo.com/1176720332/828e324bc1"
-              target="_blank"
-              rel="noopener"
-            >
-              Watch Trailer
-            </a>
-          </div>
+        <div class="video-frame">
+          <iframe
+            src="https://player.vimeo.com/video/1167036537?h=fa9181d495&title=0&byline=0&portrait=0"
+            title="RAISE trailer"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen>
+          </iframe>
         </div>
       </div>
     </section>
@@ -452,7 +463,7 @@
     <div class="separator" aria-hidden="true"></div>
 
     <section class="art" aria-label="RAISE artwork">
-      <img src="assets/raise-robot-earth.jpeg?v=21" alt="RAISE artwork with robot and Earth" />
+      <img src="assets/raise-robot-earth.jpeg?v=31" alt="RAISE artwork with robot and Earth" />
     </section>
 
     <div class="separator" aria-hidden="true"></div>
