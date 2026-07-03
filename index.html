@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>RAISE | A Michael P. Nash Film Series</title>
+  <meta
+    name="description"
+    content="RAISE, a film series by Michael P. Nash exploring whether AI can help solve the world's greatest challenges."
+  />
+
+  <style>
+    :root {
+      --black: #020405;
+      --white: #f6fbff;
+      --muted: rgba(246, 251, 255, 0.72);
+      --soft: rgba(246, 251, 255, 0.5);
+      --line: rgba(246, 251, 255, 0.18);
+      --blue: #8fb0bd;
+      --deep: #06141c;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .page {
+      min-height: 100vh;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.74), rgba(0,0,0,0.26) 48%, rgba(0,0,0,0.62)),
+        url("./assets/raise-poster-horizontal.jpeg") center center / cover no-repeat;
+    }
+
+    header {
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.24);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 26px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 190px;
+    }
+
+    .brand img {
+      display: block;
+      width: 190px;
+      height: auto;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 13px;
+      line-height: 1;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    nav a {
+      transition: color 160ms ease;
+    }
+
+    nav a:hover {
+      color: var(--white);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      min-height: calc(100vh - 86px);
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-inner {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 96px 28px 110px;
+    }
+
+    .kicker {
+      margin: 0 0 30px;
+      font-size: 13px;
+      line-height: 1.2;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 900px;
+      font-size: clamp(64px, 11vw, 162px);
+      line-height: 0.82;
+      letter-spacing: -0.075em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      margin: 44px 0 0;
+      max-width: 760px;
+      font-size: clamp(26px, 3.4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+      font-weight: 700;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.48);
+    }
+
+    .subline {
+      margin: 24px 0 0;
+      max-width: 620px;
+      font-size: clamp(17px, 1.55vw, 22px);
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 42px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 178px;
+      min-height: 52px;
+      padding: 0 22px;
+      border: 1px solid rgba(246, 251, 255, 0.62);
+      color: var(--white);
+      background: rgba(0, 0, 0, 0.32);
+      font-size: 12px;
+      line-height: 1;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+
+    .button.primary {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      border-color: var(--white);
+      background: rgba(246, 251, 255, 0.12);
+    }
+
+    .button.primary:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .info {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.92), rgba(4, 14, 21, 0.98)),
+        url("./assets/raise-robot-earth.jpeg") center center / cover no-repeat;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .info-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 96px 28px;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .section-label {
+      margin: 0 0 22px;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    h2 {
+      margin: 0;
+      max-width: 520px;
+      font-size: clamp(44px, 6vw, 86px);
+      line-height: 0.9;
+      letter-spacing: -0.064em;
+      font-weight: 700;
+    }
+
+    .info-copy {
+      max-width: 680px;
+      padding-top: 8px;
+    }
+
+    .info-copy p {
+      margin: 0;
+      font-size: clamp(20px, 2vw, 30px);
+      line-height: 1.25;
+      letter-spacing: -0.035em;
+      color: rgba(246, 251, 255, 0.86);
+    }
+
+    .info-copy p + p {
+      margin-top: 28px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      font-size: clamp(16px, 1.35vw, 20px);
+      line-height: 1.55;
+      letter-spacing: -0.015em;
+      color: var(--muted);
+    }
+
+    .contact {
+      background: #000;
+    }
+
+    .contact-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 96px 28px 110px;
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .contact-card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.055);
+      padding: 32px;
+    }
+
+    .contact-card label {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .contact-card input,
+    .contact-card textarea {
+      width: 100%;
+      margin: 0 0 18px;
+      border: 1px solid rgba(246, 251, 255, 0.22);
+      background: rgba(0,0,0,0.32);
+      color: var(--white);
+      padding: 14px;
+      font: inherit;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .contact-card textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .contact-card input:focus,
+    .contact-card textarea:focus {
+      border-color: rgba(246, 251, 255, 0.74);
+    }
+
+    .contact-note {
+      margin: 18px 0 0;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--soft);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      background: #000;
+    }
+
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px;
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+      color: var(--soft);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 18px 22px;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-inner {
+        padding-top: 80px;
+        padding-bottom: 92px;
+      }
+
+      .info-inner,
+      .contact-inner {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .brand img {
+        width: 160px;
+      }
+
+      h1 {
+        font-size: clamp(58px, 19vw, 86px);
+      }
+
+      .tagline {
+        font-size: 28px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="RAISE home">
+          <img src="./assets/raise-logo-film-series.png" alt="RAISE, a film series" />
+        </a>
+
+        <nav aria-label="Main navigation">
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-label="RAISE introduction">
+        <div class="hero-inner">
+          <p class="kicker">A Michael P. Nash Film Series</p>
+
+          <h1>RAISE</h1>
+
+          <p class="tagline">Can AI help solve the world’s greatest challenges?</p>
+
+          <p class="subline">
+            Official website coming soon.
+          </p>
+
+          <div class="actions">
+            <a class="button primary" href="#contact">Contact Us</a>
+            <a class="button" href="mailto:Nash@BeverlyHillsProductions.com">Email Production</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="info" id="about" aria-label="About RAISE">
+        <div class="info-inner">
+          <div>
+            <p class="section-label">About</p>
+            <h2>A cinematic look at AI and the future of humanity.</h2>
+          </div>
+
+          <div class="info-copy">
+            <p>
+              RAISE is a film series exploring artificial intelligence, human responsibility, and the question of whether AI can help solve the world’s greatest challenges.
+            </p>
+
+            <p>
+              This temporary site is being prepared as the official home for the project.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact" id="contact" aria-label="Contact">
+        <div class="contact-inner">
+          <div>
+            <p class="section-label">Contact</p>
+            <h2>Contact the production team.</h2>
+          </div>
+
+          <form class="contact-card" id="contactForm">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" />
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" />
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message"></textarea>
+
+            <button class="button primary" type="submit">Send Message</button>
+
+            <p class="contact-note">
+              This form opens your email client with a prepared message to Nash@BeverlyHillsProductions.com.
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>© RAISE Film</div>
+        <a href="mailto:Nash@BeverlyHillsProductions.com">Nash@BeverlyHillsProductions.com</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById("contactForm");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const subject = encodeURIComponent("RAISE website inquiry");
+      const body = encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+      );
+
+      window.location.href = `mailto:Nash@BeverlyHillsProductions.com?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
