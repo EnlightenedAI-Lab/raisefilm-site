@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>RAISE | A Michael P. Nash Film Series</title>
+  <title>RAISE | A 6-Part Docu-Series</title>
   <meta
     name="description"
-    content="RAISE, a Michael P. Nash film series."
+    content="RAISE is a six-part documentary series exploring artificial intelligence, ancestral intelligence, ancient intelligence, and the human wisdom needed to guide the future."
   />
 
   <style>
@@ -20,6 +20,7 @@
       --blue: #5f8ea2;
       --white: #ffffff;
       --max: 1120px;
+      --copy: 760px;
     }
 
     * {
@@ -60,12 +61,12 @@
       align-items: center;
       gap: 22px;
       padding: 12px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.36);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 999px;
-      background: rgba(6, 16, 24, 0.18);
+      background: rgba(6, 16, 24, 0.78);
       backdrop-filter: blur(12px);
       color: #ffffff;
-      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.38);
+      box-shadow: 0 8px 30px rgba(6, 16, 24, 0.16);
     }
 
     .nav a {
@@ -74,7 +75,7 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       font-weight: 700;
-      opacity: 0.92;
+      opacity: 0.9;
       transition: opacity 160ms ease;
       white-space: nowrap;
     }
@@ -101,7 +102,7 @@
     }
 
     .section {
-      padding: 74px 28px 82px;
+      padding: 78px 28px 86px;
       background: linear-gradient(180deg, var(--paper-2), var(--paper));
     }
 
@@ -129,7 +130,7 @@
     }
 
     h1 {
-      font-size: clamp(38px, 5.2vw, 72px);
+      font-size: clamp(42px, 5.4vw, 74px);
       line-height: 0.96;
     }
 
@@ -138,11 +139,63 @@
       line-height: 0.98;
     }
 
-    .event-grid {
+    .story-grid,
+    .event-grid,
+    .trailer-grid,
+    .facebook-grid,
+    .contact-grid {
       display: grid;
       grid-template-columns: 0.72fr 1.28fr;
       gap: 58px;
       align-items: start;
+    }
+
+    .story-copy {
+      max-width: var(--copy);
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.58;
+      letter-spacing: -0.012em;
+    }
+
+    .story-copy p {
+      margin: 0 0 22px;
+    }
+
+    .story-copy .lead {
+      color: var(--ink);
+      font-size: clamp(21px, 2.1vw, 28px);
+      line-height: 1.38;
+      letter-spacing: -0.025em;
+    }
+
+    .story-copy .question {
+      margin: 34px 0;
+      padding: 26px 0 26px 26px;
+      border-left: 4px solid var(--blue);
+      color: var(--ink);
+      font-size: clamp(25px, 3vw, 39px);
+      line-height: 1.12;
+      letter-spacing: -0.045em;
+      font-weight: 700;
+    }
+
+    .story-copy .closing {
+      margin-top: 34px;
+      color: var(--ink);
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: 1.25;
+      letter-spacing: -0.035em;
+      font-weight: 700;
+    }
+
+    .story-copy .final-line {
+      margin-top: 34px;
+      color: var(--blue);
+      font-size: 13px;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+      font-weight: 800;
     }
 
     .event-details {
@@ -215,26 +268,6 @@
       background: rgba(255, 255, 255, 0.55);
     }
 
-    .trailer-grid,
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 0.72fr 1.28fr;
-      gap: 58px;
-      align-items: start;
-    }
-
-    .trailer-copy {
-      max-width: 520px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.45;
-      letter-spacing: -0.02em;
-    }
-
-    .trailer-copy p {
-      margin: 0;
-    }
-
     .video-frame {
       position: relative;
       width: 100%;
@@ -252,6 +285,52 @@
       height: 100%;
       border: 0;
       display: block;
+    }
+
+    .facebook-copy {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+    }
+
+    .facebook-copy p {
+      margin: 0;
+    }
+
+    .qr-card {
+      width: 100%;
+      max-width: 560px;
+      justify-self: end;
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 28px;
+      align-items: center;
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(6, 16, 24, 0.14);
+      box-shadow: 0 22px 68px rgba(6, 16, 24, 0.08);
+    }
+
+    .qr-card h3 {
+      margin: 0 0 12px;
+      font-size: 25px;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .qr-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .qr-image {
+      border: 1px solid rgba(6, 16, 24, 0.12);
+      background: #ffffff;
+      padding: 10px;
     }
 
     .contact-card {
@@ -328,8 +407,10 @@
     }
 
     @media (max-width: 980px) {
+      .story-grid,
       .event-grid,
       .trailer-grid,
+      .facebook-grid,
       .contact-grid {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -339,6 +420,7 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
+      .qr-card,
       .contact-card {
         max-width: none;
         justify-self: stretch;
@@ -351,12 +433,13 @@
         right: 14px;
         left: 14px;
         justify-content: center;
-        gap: 16px;
+        gap: 15px;
         padding: 11px 12px;
       }
 
       .nav a {
-        font-size: 10px;
+        font-size: 9px;
+        letter-spacing: 0.12em;
       }
 
       .section {
@@ -375,6 +458,23 @@
         width: 100%;
       }
 
+      .story-copy {
+        font-size: 17px;
+      }
+
+      .story-copy .question {
+        padding-left: 20px;
+      }
+
+      .qr-card {
+        grid-template-columns: 1fr;
+      }
+
+      .qr-image {
+        width: min(220px, 100%);
+        justify-self: start;
+      }
+
       .contact-card {
         padding: 22px;
       }
@@ -384,8 +484,9 @@
 
 <body>
   <nav class="nav" aria-label="Page navigation">
-    <a href="#screening">Screening</a>
+    <a href="#story">Story</a>
     <a href="#trailer">Trailer</a>
+    <a href="#geneva">Geneva</a>
     <a href="#contact">Contact</a>
   </nav>
 
@@ -396,11 +497,125 @@
 
     <div class="separator" aria-hidden="true"></div>
 
-    <section class="section" id="screening" aria-label="Screening">
+    <section class="section" id="story" aria-label="About RAISE">
+      <div class="section-inner story-grid">
+        <div>
+          <p class="eyebrow">The Series</p>
+          <h1>Welcome to RAISE.</h1>
+          <div class="button-row">
+            <a class="button" href="#trailer">Watch Trailer</a>
+            <a
+              class="button light"
+              href="https://www.facebook.com/profile.php?id=61584918465804"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Follow on Facebook
+            </a>
+          </div>
+        </div>
+
+        <div class="story-copy">
+          <p class="lead">
+            <strong>RAISE is a 6-Part Docu-Series.</strong>
+          </p>
+
+          <p>
+            Humanity stands at one of the greatest turning points in its history. For the first time, we are creating a form of intelligence capable of reshaping nearly every aspect of civilization—from the food we grow and the water we protect to the energy we generate, the diseases we treat, and the future we leave for generations to come. Yet the defining question of our time is not whether artificial intelligence will change the world—it already is. The question is whether we will have the wisdom to guide it.
+          </p>
+
+          <p>
+            When our filmmaking journey began two years ago, we saw the global conversation around AI being driven by two opposing narratives. One warned of a dystopian future in which artificial intelligence leads to the end of humanity. The other promised a technological utopia where AI solves every problem and creates unlimited abundance.
+          </p>
+
+          <p>
+            <strong>RAISE</strong> lives between these extremes—where idealism meets responsibility, where innovation meets ethics, and where the future is shaped not by fear or hype, but by thoughtful human choices. It is where the middle meets the road.
+          </p>
+
+          <p>
+            Rather than asking what AI <em>might</em> become, <strong>RAISE</strong> explores what AI is already becoming. Across six cinematic episodes, the series follows pioneering scientists, engineers, physicians, conservationists, farmers, innovators, and global leaders who are using artificial intelligence to address some of humanity’s most urgent challenges—from food security and clean water to biodiversity, global health, sustainable energy, and climate resilience.
+          </p>
+
+          <p>
+            But beneath these stories lies a deeper exploration of intelligence itself.
+          </p>
+
+          <p>
+            <strong>RAISE illuminates the importance of the other AIs that have guided humanity for millennia: Ancestral Intelligence and Ancient Intelligence.</strong> These are the forms of wisdom carried through Indigenous knowledge systems, elders, lived experience, cultural memory, and nature itself—the accumulated intelligence of generations that understood balance, stewardship, reciprocity, and our relationship with the living world.
+          </p>
+
+          <p>
+            At the heart of the series is a simple yet profound question:
+          </p>
+
+          <div class="question">
+            Must we draw upon the wisdom of the past to guide the intelligence of the future?
+          </div>
+
+          <p>
+            Because intelligence alone has never guaranteed humanity’s progress. Intelligence gives us the ability to create. Experience teaches us consequence. Wisdom helps us choose what is worth creating in the first place.
+          </p>
+
+          <p>
+            Artificial intelligence may become one of the most powerful tools humanity has ever invented, but it is also a mirror. It will increasingly reflect the values, priorities, and decisions we make today. If built without wisdom, it may amplify our greatest shortcomings. If guided by humility, compassion, and a deep respect for life, it may help humanity solve challenges once thought impossible.
+          </p>
+
+          <p>
+            Ultimately, <strong>RAISE</strong> is not a series about technology.
+          </p>
+
+          <p>
+            <strong>It is a series about humanity.</strong>
+          </p>
+
+          <p>
+            It is about ensuring that scientists stand alongside storytellers, engineers alongside ethicists, entrepreneurs alongside educators, and innovators alongside Indigenous wisdom keepers and elders. It is about recognizing that the future belongs to all of us, and that the conversations shaping artificial intelligence must be as diverse as humanity itself.
+          </p>
+
+          <div class="closing">
+            The future will not be determined by what artificial intelligence can do.<br /><br />
+            It will be determined by what humanity chooses to become.
+          </div>
+
+          <p class="final-line">The Future is Listening...</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="separator" aria-hidden="true"></div>
+
+    <section class="section" id="trailer" aria-label="Trailer">
+      <div class="section-inner trailer-grid">
+        <div>
+          <p class="eyebrow">Trailer</p>
+          <h2>Watch the trailer.</h2>
+        </div>
+
+        <div class="video-frame">
+          <iframe
+            src="https://player.vimeo.com/video/1210850681?title=0&byline=0&portrait=0"
+            title="RAISE trailer"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <div class="separator" aria-hidden="true"></div>
+
+    <!-- Keep this image for now. Replace the src with the sponsor-logo artwork filename when that asset is ready. -->
+    <section class="art" aria-label="RAISE artwork">
+      <img src="assets/raise-robot-earth.jpeg?v=92" alt="RAISE artwork with robot and Earth" />
+    </section>
+
+    <div class="separator" aria-hidden="true"></div>
+
+    <section class="section" id="geneva" aria-label="Geneva screening">
       <div class="section-inner event-grid">
         <div>
-          <p class="eyebrow">Screening</p>
-          <h1>AI for Good Global Summit.</h1>
+          <p class="eyebrow">Geneva Screening</p>
+          <h2>AI for Good Global Summit.</h2>
         </div>
 
         <div>
@@ -431,7 +646,7 @@
               class="button"
               href="https://aiforgood.itu.int/event/raise-film-screening/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
             >
               Official Event
             </a>
@@ -442,28 +657,55 @@
 
     <div class="separator" aria-hidden="true"></div>
 
-    <section class="section" id="trailer" aria-label="Trailer">
-      <div class="section-inner trailer-grid">
-        <div>
-          <p class="eyebrow">Trailer</p>
-          <h2>Watch the trailer.</h2>
-        </div>
-
-        <div class="video-frame">
-          <iframe
-            src="https://player.vimeo.com/video/1210850681?title=0&byline=0&portrait=0"
-            title="RAISE trailer"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
+    <section class="art" aria-label="RAISE Geneva screening">
+      <img
+        src="assets/raise-geneva-screening.png?v=1"
+        alt="RAISE Center Stage special screening in Geneva at the AI for Good Global Summit"
+      />
     </section>
 
     <div class="separator" aria-hidden="true"></div>
 
-    <section class="art" aria-label="RAISE artwork">
-      <img src="assets/raise-robot-earth.jpeg?v=92" alt="RAISE artwork with robot and Earth" />
+    <section class="section" id="facebook" aria-label="Follow RAISE on Facebook">
+      <div class="section-inner facebook-grid">
+        <div>
+          <p class="eyebrow">Follow the Mission</p>
+          <h2>Join RAISE on Facebook.</h2>
+          <div class="facebook-copy">
+            <p>Follow the film, the people behind it, and the mission as the six-part series develops.</p>
+          </div>
+        </div>
+
+        <div class="qr-card">
+          <div>
+            <h3>Follow our mission.</h3>
+            <p>Open the RAISE Facebook page or scan the QR code.</p>
+            <div class="button-row">
+              <a
+                class="button"
+                href="https://www.facebook.com/profile.php?id=61584918465804"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open Facebook
+              </a>
+            </div>
+          </div>
+
+          <a
+            href="https://www.facebook.com/profile.php?id=61584918465804"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open the RAISE Facebook page"
+          >
+            <img
+              class="qr-image"
+              src="assets/raise-facebook-qr.png?v=1"
+              alt="QR code linking to the RAISE Facebook page"
+            />
+          </a>
+        </div>
+      </div>
     </section>
 
     <div class="separator" aria-hidden="true"></div>
@@ -488,15 +730,6 @@
           <button class="send" type="submit">Send</button>
         </form>
       </div>
-    </section>
-
-    <div class="separator" aria-hidden="true"></div>
-
-    <section class="art" aria-label="RAISE Geneva screening">
-      <img
-        src="assets/raise-geneva-screening.png?v=1"
-        alt="RAISE Center Stage special screening in Geneva at the AI for Good Global Summit"
-      />
     </section>
   </main>
 
