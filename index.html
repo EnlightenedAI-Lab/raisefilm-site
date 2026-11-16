@@ -11,6 +11,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.raisefilm.com/" />
   <meta property="og:image" content="https://www.raisefilm.com/assets/raise-poster-horizontal.jpeg" />
+  <link rel="preconnect" href="https://player.vimeo.com" />
   <link rel="preload" href="assets/fonts/Barlow-400.ttf" as="font" type="font/ttf" crossorigin />
   <link rel="preload" href="assets/fonts/BarlowCondensed-600.ttf" as="font" type="font/ttf" crossorigin />
   <style>
@@ -43,39 +44,51 @@
     .skip-link { position: fixed; top: 12px; left: 16px; z-index: 100; padding: 12px 18px; color: var(--night); background: white; transform: translateY(-160%); }
     .skip-link:focus { transform: translateY(0); }
     .site-header { position: sticky; top: 0; z-index: 30; background: #080808; border-bottom: 1px solid rgba(255,255,255,.12); }
-    .header-inner { min-height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .header-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
     .wordmark { color: #fff; font-size: 33px; font-weight: 600; letter-spacing: .13em; line-height: 1; font-family: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif; }
     .nav { display: flex; align-items: center; gap: 32px; }
     .nav a { color: #e0e0e0; font-size: 12px; font-weight: 600; letter-spacing: .08em; padding-block: 12px; text-transform: uppercase; }
     .nav a:hover { color: #fff; }
     .nav .nav-contact { padding: 10px 17px; border: 1px solid #fff; border-radius: 0; color: #fff; }
     .eyebrow { font-size: 11px; line-height: 1.5; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; }
-    .hero { background: var(--night); color: #fff; padding: 58px 0 0; }
-    .hero-grid { display: grid; grid-template-columns: .78fr 1.5fr; align-items: center; gap: 52px; padding-bottom: 52px; }
-    .hero .eyebrow { color: var(--accent); margin-bottom: 26px; }
-    h1 { font-size: clamp(64px, 6.4vw, 96px); line-height: .98; letter-spacing: -.015em; font-weight: 600; font-family: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif; text-transform: uppercase; }
-    h1 span { color: var(--accent); }
-    .hero-intro { max-width: 340px; margin-top: 24px; color: #bdbdbd; font-size: 17px; line-height: 1.7; }
-    .hero-actions { display: flex; align-items: flex-start; flex-direction: column; gap: 22px; margin-top: 30px; }
+    .hero { background: var(--night); color: #fff; }
+    h1 { font-size: clamp(38px, 4vw, 58px); line-height: 1.02; letter-spacing: -.01em; font-weight: 600; font-family: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif; text-transform: uppercase; }
     .button { min-height: 50px; padding: 13px 24px; display: inline-flex; align-items: center; justify-content: center; gap: 13px; background: #fff; color: var(--night); border: 1px solid transparent; border-radius: 0; font-size: 16px; font-weight: 600; line-height: 1.4; transition: background .18s ease, color .18s ease; font-family: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; border-color: #fff; }
     .button:hover { background: #dedede; transform: none; color: #080808; }
     .button.dark { color: #fff; background: transparent; border-color: #fff; }
     .button.dark:hover { background: #fff; color: #080808; }
     .text-link { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; line-height: 1.5; border-bottom: 1px solid currentColor; padding-bottom: 4px; }
-    .hero-actions .text-link { color: #ddd; }
-    .video-stage { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; box-shadow: none; }
-    .video-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .trailer-cover { display: block; position: absolute; inset: 0; overflow: hidden; color: white; }
-    .trailer-cover > img { width: 100%; height: 100%; object-fit: contain; }
-    .trailer-cover::after { content: ""; position: absolute; inset: 50% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.8)); pointer-events: none; }
-    .cover-control { position: absolute; left: 24px; bottom: 22px; display: flex; gap: 14px; align-items: center; z-index: 1; }
-    .play-orb { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; color: var(--night); background: #fff; transition: transform .18s ease; }
-    .trailer-cover:hover .play-orb { transform: scale(1.08); }
-    .cover-label { font-size: 15px; font-weight: 600; letter-spacing: .01em; text-shadow: 0 2px 8px #000; }
-    .cover-label small { display: block; color: #e0e0e0; margin-bottom: 4px; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; }
-    .player-caption { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 15px; color: #aaa; font-size: 10px; line-height: 1.5; }
-    .player-caption > span { letter-spacing: .13em; text-transform: uppercase; }
-    .player-caption a { display: inline-flex; align-items: center; gap: 6px; border-bottom: 1px solid #666666; padding-bottom: 2px; }
+    .cinema-stage { position: relative; width: 100%; background: #000; }
+    .cinema-picture { position: relative; width: 100%; height: min(56.25vw, calc(100svh - 137px)); background: #000; overflow: hidden; }
+    .cinema-picture iframe, .cinema-picture > img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .cinema-picture > img { object-fit: contain; pointer-events: none; }
+    .cinema-picture::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.78)); pointer-events: none; transition: opacity .25s ease; }
+    .cinema-intro { position: absolute; left: 48px; right: 48px; bottom: 102px; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; transition: opacity .25s ease, visibility .25s ease; }
+    .cinema-intro .eyebrow { margin-bottom: 12px; color: #fff; }
+    .cinema-intro h1 { text-shadow: 0 2px 18px rgba(0,0,0,.5); }
+    .watch-button { max-width: 350px; min-height: 54px; text-align: left; font-size: 15px; letter-spacing: .05em; }
+    .watch-button:disabled { opacity: .7; cursor: wait; }
+    .is-watching .cinema-intro { opacity: 0; visibility: hidden; pointer-events: none; }
+    .is-watching .cinema-picture::after { opacity: 0; }
+    .player-controls { display: flex; align-items: center; gap: 22px; min-height: 64px; padding: 9px 48px; border-bottom: 1px solid var(--line); background: #080808; }
+    .control-button { display: inline-flex; align-items: center; justify-content: center; flex: none; gap: 8px; min-height: 44px; padding: 0 3px; border: 0; background: transparent; color: #ddd; font-size: 12px; font-weight: 600; line-height: 1.4; white-space: nowrap; }
+    .control-button:hover { color: #fff; }
+    .control-button:disabled { opacity: .45; cursor: wait; }
+    .player-time { min-width: 78px; color: #bdbdbd; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .player-progress { flex: 1; min-width: 70px; width: auto; height: 24px; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; accent-color: #fff; cursor: pointer; }
+    .player-captions { max-width: 160px; height: 34px; padding: 5px; border: 1px solid #666; background: #080808; color: #fff; font: inherit; font-size: 11px; }
+    .player-status { position: absolute; top: 16px; left: 48px; right: 48px; z-index: 3; width: fit-content; max-width: calc(100% - 96px); padding: 7px 11px; background: rgba(0,0,0,.8); color: #eee; font-size: 12px; line-height: 1.5; }
+    .player-status:empty { display: none; }
+    .cinema-stage:fullscreen { display: flex; flex-direction: column; justify-content: center; width: 100%; height: 100%; background: #000; }
+    .cinema-stage:fullscreen .cinema-picture { flex: 1; height: auto; min-height: 0; }
+    .cinema-stage:fullscreen .player-controls { flex: none; width: 100%; }
+    .hero-summary { display: flex; align-items: center; justify-content: space-between; gap: 54px; padding-block: 34px; }
+    .hero-caption { color: #aaa; font-size: 10px; letter-spacing: .13em; text-transform: uppercase; margin-bottom: 12px; }
+    .hero-intro { max-width: 760px; color: #bdbdbd; font-size: 18px; line-height: 1.7; }
+    .hero-links { flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+    .hero-links .vimeo-link { color: #aaa; font-size: 11px; font-weight: 400; }
+    .no-script-note { padding: 16px 20px; text-align: center; font-size: 14px; }
+    .no-script-note a { text-decoration: underline; }
     .project-facts { display: grid; grid-template-columns: 1fr 1.35fr 1fr; border-top: 1px solid #303030; }
     .project-facts > div { padding: 23px 30px 25px; border-left: 1px solid #303030; }
     .project-facts > div:first-child { padding-left: 0; border: 0; }
@@ -149,26 +162,26 @@
     .footer-inner p { letter-spacing: .14em; text-transform: uppercase; }
     .footer-links { display: flex; flex-wrap: wrap; gap: 24px; }
     .footer-links a:hover { color: #fff; text-decoration: underline; }
-    @media (min-width: 1600px) { .hero { padding-top: 76px; } .hero-grid { padding-bottom: 64px; } }
     @media (max-width: 1100px) {
       .wrap { width: calc(100% - 64px); }
-      .hero-grid { gap: 34px; grid-template-columns: .82fr 1.3fr; }
-      h1 { font-size: 66px; }
-      .hero-intro { font-size: 15px; }
+      .cinema-intro { left: 32px; right: 32px; gap: 24px; }
+      .player-controls { padding-inline: 32px; gap: 17px; }
+      .player-status { left: 32px; right: 32px; max-width: calc(100% - 64px); }
+      .hero-summary { gap: 40px; }
       .story-grid { gap: 55px; }
       .screening-grid, .contact-grid { gap: 50px; }
       .section { padding-block: 78px; }
     }
     @media (max-width: 800px) {
-      .header-inner { min-height: 70px; }
+      .header-inner { min-height: 64px; }
       .nav { gap: 22px; }
-      .hero { padding-top: 35px; }
-      .hero-grid { grid-template-columns: 1fr; gap: 30px; padding-bottom: 32px; }
-      .hero .eyebrow { margin-bottom: 14px; }
-      h1 { font-size: clamp(56px, 8vw, 72px); }
-      h1 br { display: initial; }
-      .hero-intro { max-width: 570px; margin-top: 17px; }
-      .hero-actions { display: none; }
+      .cinema-picture { height: min(56.25vw, calc(100svh - 129px)); }
+      .cinema-intro h1 { font-size: 35px; }
+      .cinema-intro .eyebrow { font-size: 9px; }
+      .watch-button { max-width: 290px; padding: 12px 18px; font-size: 13px; }
+      .player-controls { gap: 14px; }
+      .hero-intro { font-size: 16px; }
+      .hero-summary { align-items: flex-start; gap: 30px; }
       .project-facts > div { padding: 20px; }
       .project-facts dd { font-size: 11px; }
       .story-grid { grid-template-columns: 1fr; gap: 34px; }
@@ -192,18 +205,26 @@
       .nav a { font-size: 10px; }
       .nav .nav-screening { display: none; }
       .nav .nav-contact { padding: 8px 10px; }
-      .hero { padding-top: 29px; }
-      .hero-grid { gap: 25px; }
-      .hero .eyebrow { font-size: 9px; }
-      h1 { font-size: clamp(46px, 13vw, 64px); line-height: .98; }
-      .hero-intro { font-size: 14px; line-height: 1.65; margin-top: 15px; }
-      .cover-control { left: 14px; bottom: 13px; gap: 10px; }
-      .play-orb { width: 38px; height: 38px; }
-      .play-orb svg { width: 13px; }
-      .cover-label { font-size: 12px; }
-      .cover-label small { display: none; }
-      .player-caption { font-size: 9px; margin-top: 11px; }
-      .player-caption > span { letter-spacing: .06em; }
+      .cinema-picture::after { display: none; }
+      .cinema-intro { position: relative; inset: auto; display: block; padding: 23px 20px; background: #080808; }
+      .cinema-intro h1 { font-size: 36px; line-height: 1.05; }
+      .cinema-intro h1 br { display: none; }
+      .cinema-intro .eyebrow { margin-bottom: 10px; }
+      .watch-button { margin-top: 18px; width: 100%; max-width: none; min-height: 48px; justify-content: flex-start; font-size: 14px; }
+      .is-watching .cinema-intro { display: none; }
+      .player-controls { display: grid; grid-template-columns: auto auto 1fr auto; gap: 4px 15px; padding: 7px 20px 12px; }
+      .control-button { min-height: 42px; font-size: 11px; }
+      #restart-trailer { justify-self: start; }
+      #fullscreen-trailer { grid-column: 4; grid-row: 1; }
+      #fullscreen-trailer .control-label { display: none; }
+      .player-progress { grid-column: 1 / -1; grid-row: 2; width: 100%; }
+      .player-time { grid-column: 1 / 3; grid-row: 3; font-size: 10px; }
+      .player-captions { grid-column: 3 / 5; grid-row: 3; justify-self: end; }
+      .player-status { top: 10px; left: 12px; right: 12px; max-width: calc(100% - 24px); font-size: 11px; }
+      .hero-summary { display: block; padding-block: 25px; }
+      .hero-intro { font-size: 15px; line-height: 1.7; }
+      .hero-links { flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 18px 26px; margin-top: 20px; }
+      .hero-caption { font-size: 9px; }
       .project-facts { grid-template-columns: 1fr; padding-block: 8px; }
       .project-facts > div, .project-facts > div:first-child { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 9px 0; border: 0; }
       .project-facts dt { flex: none; font-size: 8px; margin: 0; }
@@ -253,35 +274,56 @@
   </header>
   <main id="main">
     <section class="hero" id="trailer" aria-label="RAISE and official trailer">
-      <div class="wrap">
-        <div class="hero-grid">
-          <div class="hero-copy">
+      <div class="cinema-stage" id="film-player" role="region" aria-label="Official RAISE trailer">
+        <div class="cinema-picture">
+          <iframe id="trailer-player" data-src="https://player.vimeo.com/video/1210850681?h=f787f30ff1&amp;controls=0&amp;muted=1&amp;loop=0&amp;playsinline=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;preload=auto" title="RAISE trailer" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen tabindex="-1"></iframe>
+          <script>
+            (function () {
+              var frame = document.getElementById('trailer-player');
+              var url = new URL(frame.dataset.src);
+              var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              var saveData = navigator.connection && navigator.connection.saveData;
+              url.searchParams.set('autoplay', reduced || saveData ? '0' : '1');
+              frame.src = url.toString();
+            }());
+          </script>
+          <img id="trailer-cover" src="assets/raise-poster-horizontal.jpeg?v=31" alt="RAISE film artwork" width="2048" height="1152" fetchpriority="high" />
+        </div>
+        <div class="cinema-intro" id="cinema-intro">
+          <div>
             <p class="eyebrow">A six-part documentary series</p>
             <h1>The future<br /> <span>is listening.</span></h1>
-            <p class="hero-intro">A cinematic exploration of artificial, ancestral and ancient intelligence—and the human wisdom needed to guide the future.</p>
-            <div class="hero-actions">
-              <a class="button" href="https://vimeo.com/1210850681/f787f30ff1" data-play-trailer>
-                <svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1l10 6-10 6V1z" fill="currentColor" /></svg>
-                Watch trailer
-              </a>
-              <a class="text-link" href="#contact">Sales inquiries <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M4 3h9v9" stroke="currentColor" stroke-width="1.5" /></svg></a>
-            </div>
           </div>
-          <div class="trailer-player">
-            <div class="video-stage" id="film-player">
-              <iframe id="trailer-player" src="https://player.vimeo.com/video/1210850681?h=f787f30ff1&amp;title=0&amp;byline=0&amp;portrait=0" title="RAISE trailer" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen tabindex="-1" aria-hidden="true"></iframe>
-              <a class="trailer-cover" id="trailer-cover" href="https://vimeo.com/1210850681/f787f30ff1" data-play-trailer aria-label="Play the RAISE trailer">
-                <img src="assets/raise-poster-horizontal.jpeg?v=31" alt="RAISE film artwork" width="2048" height="1152" fetchpriority="high" />
-                <span class="cover-control">
-                  <span class="play-orb"><svg width="16" height="18" viewBox="0 0 16 18" aria-hidden="true"><path d="M2 1l13 8-13 8V1z" fill="currentColor" /></svg></span>
-                  <span class="cover-label"><small>The official trailer</small>Play trailer</span>
-                </span>
-              </a>
-            </div>
-            <div class="player-caption">
-              <span>RAISE · Official trailer</span>
-              <a href="https://vimeo.com/1210850681/f787f30ff1" target="_blank" rel="noopener noreferrer">Watch on Vimeo <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M4 3h9v9" stroke="currentColor" stroke-width="1.5" /></svg></a>
-            </div>
+          <button class="button watch-button" id="watch-with-sound" type="button" disabled>
+            <svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1l10 6-10 6V1z" fill="currentColor" /></svg>
+            <span>Watch from the beginning with sound</span>
+          </button>
+        </div>
+        <div class="player-controls" id="player-controls" role="group" aria-label="Trailer controls" hidden>
+          <button class="control-button" id="play-toggle" type="button"><span id="play-label">Play</span></button>
+          <button class="control-button" id="sound-toggle" type="button"><span id="sound-label">Sound on</span></button>
+          <button class="control-button" id="restart-trailer" type="button" aria-label="Restart trailer">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 6a7 7 0 1 1-1 7M4 2v5h5" stroke="currentColor" stroke-width="1.5" /></svg><span class="control-label">Restart</span>
+          </button>
+          <span class="player-time" id="trailer-time" aria-hidden="true">0:00 / 0:00</span>
+          <input class="player-progress" id="trailer-progress" type="range" min="0" max="1000" step="1" value="0" aria-label="Trailer progress" />
+          <select class="player-captions" id="trailer-captions" aria-label="Trailer captions" hidden></select>
+          <button class="control-button" id="fullscreen-trailer" type="button" aria-label="Enter fullscreen">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 3H3v4m10-4h4v4M3 13v4h4m10-4v4h-4" stroke="currentColor" stroke-width="1.5" /></svg><span class="control-label">Fullscreen</span>
+          </button>
+        </div>
+        <p class="player-status" id="player-status" role="status" aria-live="polite">Loading trailer…</p>
+        <noscript><p class="no-script-note"><a href="https://vimeo.com/1210850681/f787f30ff1" target="_blank" rel="noopener noreferrer">Watch the RAISE trailer on Vimeo</a></p></noscript>
+      </div>
+      <div class="wrap">
+        <div class="hero-summary">
+          <div>
+            <p class="hero-caption">RAISE · Official trailer</p>
+            <p class="hero-intro">A cinematic exploration of artificial, ancestral and ancient intelligence—and the human wisdom needed to guide the future.</p>
+          </div>
+          <div class="hero-links">
+            <a class="text-link" href="#contact">Sales inquiries <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M4 3h9v9" stroke="currentColor" stroke-width="1.5" /></svg></a>
+            <a class="text-link vimeo-link" id="vimeo-fallback" href="https://vimeo.com/1210850681/f787f30ff1" target="_blank" rel="noopener noreferrer">Watch on Vimeo <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 13 13 3M4 3h9v9" stroke="currentColor" stroke-width="1.5" /></svg></a>
           </div>
         </div>
         <dl class="project-facts" aria-label="Project at a glance">
@@ -450,32 +492,294 @@
       <nav class="footer-links" aria-label="Footer navigation"><a href="#trailer">Trailer</a><a href="#story">Story</a><a href="#geneva">Geneva</a><a href="#contact">Contact</a></nav>
     </div>
   </footer>
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <script>
+(function () {
+  "use strict";
+
+  function initializeTrailer() {
+    const stage = document.getElementById("film-player");
+    const frame = document.getElementById("trailer-player");
+    if (!stage || !frame) return;
+
+    const poster = document.getElementById("trailer-cover");
+    const intro = document.getElementById("cinema-intro");
+    const watch = document.getElementById("watch-with-sound");
+    const controls = document.getElementById("player-controls");
+    const playButton = document.getElementById("play-toggle");
+    const playLabel = document.getElementById("play-label");
+    const soundButton = document.getElementById("sound-toggle");
+    const soundLabel = document.getElementById("sound-label");
+    const restartButton = document.getElementById("restart-trailer");
+    const fullscreenButton = document.getElementById("fullscreen-trailer");
+    const progress = document.getElementById("trailer-progress");
+    const time = document.getElementById("trailer-time");
+    const captions = document.getElementById("trailer-captions");
+    const status = document.getElementById("player-status");
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const automatic = !motionPreference.matches && !(navigator.connection && navigator.connection.saveData);
+    const source = new URL(frame.dataset.src, window.location.href);
+    source.searchParams.set("autoplay", automatic ? "1" : "0");
+    source.searchParams.set("muted", "1");
+    if (frame.getAttribute("src") !== source.href) frame.src = source.href;
+
+    let player;
+    let ready = false;
+    let paused = true;
+    let muted = true;
+    let ended = false;
+    let duration = 0;
+    let position = 0;
+    let scrubbing = false;
+    let intentional = false;
+    let fullscreen = false;
+    let textTracks = [];
+    let operation = false;
+
+    function announce(message) {
+      status.textContent = message;
+      status.hidden = !message;
+    }
+
+    function showIntro(show) {
+      stage.classList.toggle("is-watching", !show);
+      intro.inert = !show;
+      intro.setAttribute("aria-hidden", String(!show));
+      if (!show && intro.contains(document.activeElement)) playButton.focus({ preventScroll: true });
+    }
+
+    function clock(seconds) {
+      const whole = Math.max(0, Math.floor(Number(seconds) || 0));
+      return Math.floor(whole / 60) + ":" + String(whole % 60).padStart(2, "0");
+    }
+
+    function paintTime(seconds) {
+      time.textContent = clock(seconds) + " / " + clock(duration);
+      progress.setAttribute("aria-valuetext", clock(seconds) + " of " + clock(duration));
+      if (!scrubbing) progress.value = duration ? String(Math.round(seconds / duration * 1000)) : "0";
+      progress.disabled = !duration;
+    }
+
+    function paintPlayback() {
+      playLabel.textContent = paused ? (ended ? "Replay" : "Play") : "Pause";
+      playButton.setAttribute("aria-label", paused ? (ended ? "Replay trailer" : "Play trailer") : "Pause trailer");
+      stage.classList.toggle("is-playing", !paused);
+    }
+
+    function paintSound(value) {
+      muted = value;
+      soundLabel.textContent = muted ? "Sound on" : "Sound off";
+      soundButton.setAttribute("aria-label", muted ? "Unmute trailer" : "Mute trailer");
+      soundButton.setAttribute("aria-pressed", String(!muted));
+    }
+
+    function failure(error, fallback) {
+      if (error && (error.name === "NotAllowedError" || /autoplay|not allowed/i.test(error.message || ""))) {
+        announce("Press play to start the trailer. If this device blocks playback, use the video link below.");
+      } else if (error && (error.name === "PrivacyError" || error.name === "PasswordError")) {
+        announce("The trailer cannot play here. Open it using the video link below.");
+      } else {
+        announce(fallback || "The trailer could not load. Open it using the video link below.");
+      }
+    }
+
+    function playing(data) {
+      paused = false;
+      ended = false;
+      poster.hidden = true;
+      stage.classList.add("has-played");
+      if (data && Number.isFinite(data.duration)) duration = data.duration;
+      if (data && Number.isFinite(data.seconds)) position = data.seconds;
+      paintPlayback();
+      paintTime(position);
+      announce("");
+      if (intentional) showIntro(false);
+    }
+
+    function finishPlayRequest() {
+      // An already playing video may resolve play() without another playing event.
+      if (!paused && intentional) showIntro(false);
+    }
+
+    async function perform(action, message) {
+      if (!ready || operation) return;
+      operation = true;
+      try {
+        await action();
+        announce("");
+      } catch (error) {
+        failure(error, message);
+      } finally {
+        operation = false;
+      }
+    }
+
+    announce(automatic ? "Loading trailer…" : "Press play when you’re ready.");
+    watch.disabled = true;
+    progress.disabled = true;
+    if (!window.Vimeo || !window.Vimeo.Player) {
+      announce("The player could not load. Open the trailer using the video link below.");
+      return;
+    }
+
+    try {
+      player = new window.Vimeo.Player(frame);
+    } catch (error) {
+      failure(error);
+      return;
+    }
+
+    const loadingNotice = window.setTimeout(function () {
+      if (!ready) announce("The trailer is taking longer to load. You can open it using the video link below.");
+    }, 12000);
+
+    player.on("playing", playing);
+    player.on("pause", function () {
+      paused = true;
+      paintPlayback();
+      showIntro(true);
+    });
+    player.on("ended", function () {
+      paused = true;
+      ended = true;
+      poster.hidden = false;
+      paintPlayback();
+      showIntro(true);
+    });
+    player.on("timeupdate", function (data) {
+      position = data.seconds;
+      duration = data.duration;
+      if (!scrubbing) paintTime(position);
+      if (!paused && position > 0 && !poster.hidden) playing(data);
+    });
+    player.on("volumechange", function (data) {
+      if (typeof data.muted === "boolean") paintSound(data.muted);
+    });
+    player.on("texttrackchange", function (data) {
+      const index = textTracks.findIndex(function (track) { return track.language === data.language && track.kind === data.kind; });
+      captions.value = index < 0 ? "off" : String(index);
+    });
+    player.on("fullscreenchange", function (data) {
+      fullscreen = data.fullscreen;
+      fullscreenButton.setAttribute("aria-label", fullscreen ? "Exit fullscreen" : "Enter fullscreen");
+    });
+    player.on("error", function (error) {
+      if (!error.method) failure(error);
+    });
+
+    watch.addEventListener("click", function () {
+      perform(function () {
+        intentional = true;
+        // Send playback and sound requests during the user's click or tap.
+        return Promise.all([player.setMuted(false), player.setCurrentTime(0), player.play()]).then(function (values) {
+          paintSound(values[0]);
+          finishPlayRequest();
+        });
+      }, "Unable to start with sound. Try Play, or use the video link below.");
+    });
+    playButton.addEventListener("click", function () {
+      perform(function () {
+        if (!paused) return player.pause();
+        intentional = true;
+        if (ended) return Promise.all([player.setCurrentTime(0), player.play()]).then(finishPlayRequest);
+        return player.play().then(finishPlayRequest);
+      }, "Unable to play the trailer. Use the video link below.");
+    });
+    soundButton.addEventListener("click", function () {
+      perform(function () {
+        return player.setMuted(!muted).then(function (value) {
+          paintSound(value);
+          if (!value) {
+            intentional = true;
+            finishPlayRequest();
+          }
+        });
+      }, "Unable to change sound. Try the video link below.");
+    });
+    restartButton.addEventListener("click", function () {
+      perform(function () {
+        intentional = true;
+        return Promise.all([player.setCurrentTime(0), player.play()]).then(finishPlayRequest);
+      }, "Unable to restart the trailer. Try again.");
+    });
+    fullscreenButton.addEventListener("click", function () {
+      perform(function () {
+        if (document.fullscreenElement) return document.exitFullscreen();
+        if (fullscreen) return player.exitFullscreen();
+        return stage.requestFullscreen ? stage.requestFullscreen() : player.requestFullscreen();
+      }, "Fullscreen is unavailable on this device.");
+    });
+    document.addEventListener("fullscreenchange", function () {
+      fullscreenButton.setAttribute("aria-label", document.fullscreenElement ? "Exit fullscreen" : "Enter fullscreen");
+    });
+    progress.addEventListener("input", function () {
+      scrubbing = true;
+      paintTime(duration * Number(progress.value) / 1000);
+    });
+    progress.addEventListener("change", function () {
+      if (!ready || !duration) return;
+      const target = Math.min(duration, Math.max(0, duration * Number(progress.value) / 1000));
+      player.setCurrentTime(target).then(function (seconds) {
+        position = seconds;
+        announce("");
+      }).catch(function (error) {
+        failure(error, "Unable to move to that point. Try again.");
+      }).finally(function () {
+        scrubbing = false;
+        paintTime(position);
+      });
+    });
+    progress.addEventListener("blur", function () { scrubbing = false; });
+    captions.addEventListener("change", function () {
+      perform(function () {
+        const track = textTracks[Number(captions.value)];
+        return captions.value === "off" ? player.disableTextTrack() : player.enableTextTrack(track.language, track.kind);
+      }, "Captions could not be changed. Try again.");
+    });
+
+    player.ready().then(function () {
+      ready = true;
+      window.clearTimeout(loadingNotice);
+      controls.hidden = false;
+      watch.disabled = false;
+      if (automatic) player.play().catch(function (error) { failure(error); });
+      else announce("Press play when you’re ready.");
+      player.getDuration().then(function (value) { duration = value; paintTime(position); }).catch(function () {});
+      player.getMuted().then(paintSound).catch(function () {});
+      player.getPaused().then(function (value) { paused = value; paintPlayback(); }).catch(function () {});
+      player.getTextTracks().then(function (tracks) {
+        textTracks = tracks.filter(function (track) { return track.kind === "captions" || track.kind === "subtitles"; });
+        if (!textTracks.length) return;
+        const off = document.createElement("option");
+        off.value = "off";
+        off.textContent = "Captions off";
+        captions.appendChild(off);
+        textTracks.forEach(function (track, index) {
+          const option = document.createElement("option");
+          option.value = String(index);
+          option.textContent = track.label || track.language;
+          option.selected = track.mode === "showing";
+          captions.appendChild(option);
+        });
+        captions.hidden = false;
+      }).catch(function () {});
+    }).catch(function (error) {
+      window.clearTimeout(loadingNotice);
+      failure(error);
+    });
+
+    function respectMotion(event) {
+      if (event.matches && ready && !intentional) player.pause().catch(function () {});
+    }
+    if (motionPreference.addEventListener) motionPreference.addEventListener("change", respectMotion);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initializeTrailer, { once: true });
+  else initializeTrailer();
+}());
+  </script>
   <script>
     (function () {
-      const player = document.getElementById("trailer-player");
-      const cover = document.getElementById("trailer-cover");
-      let trailerStarted = false;
-      document.querySelectorAll("[data-play-trailer]").forEach(function (link) {
-        link.addEventListener("click", function (event) {
-          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-          event.preventDefault();
-          if (!trailerStarted) {
-            const url = new URL(player.src);
-            url.searchParams.set("autoplay", "1");
-            player.src = url.toString();
-            trailerStarted = true;
-          }
-          cover.hidden = true;
-          player.removeAttribute("aria-hidden");
-          player.removeAttribute("tabindex");
-          player.focus({ preventScroll: true });
-          document.getElementById("film-player").scrollIntoView({
-            block: "center",
-            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
-          });
-        });
-      });
-
       const form = document.getElementById("contactForm");
       form.addEventListener("submit", function (event) {
         event.preventDefault();
