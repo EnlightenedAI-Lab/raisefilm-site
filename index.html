@@ -534,7 +534,9 @@
     let intentional = false;
     let fullscreen = false;
     let textTracks = [];
-    let operation = false;
+    let latestOperation = 0;
+    let playbackRevision = 0;
+    let soundRevision = 0;
 
     function announce(message) {
       status.textContent = message;
@@ -584,6 +586,7 @@
     }
 
     function playing(data) {
+      playbackRevision++;
       paused = false;
       ended = false;
       poster.hidden = true;
@@ -601,16 +604,18 @@
       if (!paused && intentional) showIntro(false);
     }
 
-    async function perform(action, message) {
-      if (!ready || operation) return;
-      operation = true;
+    async function perform(action, message, onSuccess) {
+      if (!ready) return;
+      // Each control stays usable even if an earlier SDK command never settles.
+      const operation = ++latestOperation;
       try {
-        await action();
-        announce("");
+        const result = await action();
+        if (operation === latestOperation) {
+          if (onSuccess) onSuccess(result);
+          announce("");
+        }
       } catch (error) {
-        failure(error, message);
-      } finally {
-        operation = false;
+        if (operation === latestOperation) failure(error, message);
       }
     }
 
@@ -635,11 +640,13 @@
 
     player.on("playing", playing);
     player.on("pause", function () {
+      playbackRevision++;
       paused = true;
       paintPlayback();
       showIntro(true);
     });
     player.on("ended", function () {
+      playbackRevision++;
       paused = true;
       ended = true;
       poster.hidden = false;
@@ -653,7 +660,11 @@
       if (!paused && position > 0 && !poster.hidden) playing(data);
     });
     player.on("volumechange", function (data) {
-      if (typeof data.muted === "boolean") paintSound(data.muted);
+      if (typeof data.muted === "boolean") {
+        soundRevision++;
+        paintSound(data.muted);
+        if (!data.muted) finishPlayRequest();
+      }
     });
     player.on("texttrackchange", function (data) {
       const index = textTracks.findIndex(function (track) { return track.language === data.language && track.kind === data.kind; });
@@ -670,37 +681,41 @@
     watch.addEventListener("click", function () {
       perform(function () {
         intentional = true;
+        const needsPlay = paused || ended;
         // Send playback and sound requests during the user's click or tap.
-        return Promise.all([player.setMuted(false), player.setCurrentTime(0), player.play()]).then(function (values) {
-          paintSound(values[0]);
-          finishPlayRequest();
-        });
-      }, "Unable to start with sound. Try Play, or use the video link below.");
+        const requests = [player.setMuted(false), player.setCurrentTime(0)];
+        if (needsPlay) requests.push(player.play());
+        return Promise.all(requests);
+      }, "Unable to start with sound. Try Play, or use the video link below.", function (values) {
+        paintSound(values[0]);
+        finishPlayRequest();
+      });
     });
     playButton.addEventListener("click", function () {
       perform(function () {
         if (!paused) return player.pause();
         intentional = true;
-        if (ended) return Promise.all([player.setCurrentTime(0), player.play()]).then(finishPlayRequest);
-        return player.play().then(finishPlayRequest);
-      }, "Unable to play the trailer. Use the video link below.");
+        if (ended) return Promise.all([player.setCurrentTime(0), player.play()]);
+        return player.play();
+      }, "Unable to play the trailer. Use the video link below.", finishPlayRequest);
     });
     soundButton.addEventListener("click", function () {
       perform(function () {
-        return player.setMuted(!muted).then(function (value) {
-          paintSound(value);
-          if (!value) {
-            intentional = true;
-            finishPlayRequest();
-          }
-        });
-      }, "Unable to change sound. Try the video link below.");
+        if (muted) intentional = true;
+        return player.setMuted(!muted);
+      }, "Unable to change sound. Try the video link below.", function (value) {
+        paintSound(value);
+        if (!value) finishPlayRequest();
+      });
     });
     restartButton.addEventListener("click", function () {
       perform(function () {
         intentional = true;
-        return Promise.all([player.setCurrentTime(0), player.play()]).then(finishPlayRequest);
-      }, "Unable to restart the trailer. Try again.");
+        const needsPlay = paused || ended;
+        const requests = [player.setCurrentTime(0)];
+        if (needsPlay) requests.push(player.play());
+        return Promise.all(requests);
+      }, "Unable to restart the trailer. Try again.", finishPlayRequest);
     });
     fullscreenButton.addEventListener("click", function () {
       perform(function () {
@@ -742,11 +757,19 @@
       window.clearTimeout(loadingNotice);
       controls.hidden = false;
       watch.disabled = false;
-      if (automatic) player.play().catch(function (error) { failure(error); });
-      else announce("Press play when you’re ready.");
+      if (!automatic) announce("Press play when you’re ready.");
       player.getDuration().then(function (value) { duration = value; paintTime(position); }).catch(function () {});
-      player.getMuted().then(paintSound).catch(function () {});
-      player.getPaused().then(function (value) { paused = value; paintPlayback(); }).catch(function () {});
+      const initialSoundRevision = soundRevision;
+      player.getMuted().then(function (value) {
+        if (soundRevision === initialSoundRevision) paintSound(value);
+      }).catch(function () {});
+      const initialPlaybackRevision = playbackRevision;
+      player.getPaused().then(function (value) {
+        if (playbackRevision !== initialPlaybackRevision) return;
+        paused = value;
+        paintPlayback();
+        if (paused && automatic && !intentional) announce("Press play to start the trailer.");
+      }).catch(function () {});
       player.getTextTracks().then(function (tracks) {
         textTracks = tracks.filter(function (track) { return track.kind === "captions" || track.kind === "subtitles"; });
         if (!textTracks.length) return;
